@@ -1,12 +1,34 @@
 .display-item {
-    display: flex;
-    flex-direction: column;
     flex: 1 0 21%;
     margin: 1rem 0;
     max-width: 23%;
     border: solid 1px #EAEAEA;
     border-radius: 4px;
     overflow: hidden;
+    box-sizing: border-box;
+}
+
+.display-item,
+.exco-wrapper > a {
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+.exco-wrapper > a {
+    height: 100%;
+    text-decoration: none;
+}
+
+.thumbnail {
+    display: flex;
+    height: 210px;
+    align-items: center;
+    justify-content: center;
+    border-bottom: 1px solid #EAEAEA;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
 }
 
 .display-item.error-item {
@@ -31,6 +53,7 @@
 
 .display-item iframe {
     width: 100%;
+    border: none;
 }
 
 .display-item .playbuzz {

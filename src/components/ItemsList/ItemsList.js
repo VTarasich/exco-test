@@ -1,32 +1,27 @@
-import React, { Component } from 'react';
+import React from 'react';
 
-import './ItemsList.css'
+import { VideoSourceTypes } from '../../types/VideoSourceTypes';
+import VideoItem from '../../components/VideoItem/VideoItem';
+import ExcoItem from '../../components/ExcoItem/ExcoItem';
 
-import DisplayItem from '../../components/DisplayItem/DisplayItem';
-import { VideoSourceTypes } from '../../types/VideoSourceTypes'
+import './ItemsList.css';
 
-class itemsList extends Component {
-    supportedItems = items => {
-        const approved = items.filter(item => {
-            return !!(VideoSourceTypes.find(source => source.name === item.source));
-        });
-        return approved;
-    } ;
+const isVideo = (item) => VideoSourceTypes.find(source => source.name === item.source && item.type === 'video') !== undefined;
 
-    render() {
-        const items = this.supportedItems(this.props.items).map((item, index) => {
-            return <DisplayItem key={item.videoId ? item.videoId : index} itemData={item} />;
-        });
-
-        return (
-            <div className="items-list">
-                <div className="item-list__header">
-                    <h1>Most viewed</h1>
-                </div>
-                <div className="items-list__content">{items}</div>
-            </div>
-        );
-    }
+const ItemsList = ({ items }) => {
+	return (
+		<div className="items-list">
+			<div className="item-list__header">
+				<h1>Most viewed</h1>
+			</div>
+			<div className="items-list__content">
+				{items.map((item, index) => isVideo(item)
+					? <VideoItem key={item.itemId ? item.itemId : index} itemData={item}/>
+					: <ExcoItem key={item.itemId ? item.itemId : index} itemData={item}/>,
+				)}
+			</div>
+		</div>
+	);
 }
 
-export default itemsList;
+export default ItemsList;

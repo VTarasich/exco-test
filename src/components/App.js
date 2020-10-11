@@ -1,39 +1,26 @@
-import React, { Component, lazy, Suspense } from 'react';
+import React from 'react';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 
-import './App.css'
+import Navbar from '../components/Navbar/Navbar';
+import ExcoPage from './Pages/ExcoPage/ExcoPage';
+import Feed from './Pages/Feed/Feed';
 
-import Navbar from '../components/Navbar/Navbar'
-import playbuzz from '../api/playbuzz';
+import './App.css';
 
-const ItemsList = lazy(() => import('./ItemsList/ItemsList'));
-
-class App extends Component {
-    state = { items: [] };
-
-    render() {
-        return (
-            <div className="app">
-                <Navbar />
-                <main>
-                    <Suspense fallback={'Loading..'}>
-                        <ItemsList items={this.state.items} />
-                    </Suspense>
-                </main>
-            </div>
-        );
-    }
-
-    componentDidMount() {
-        this.getItems().then((res) => {
-            this.setState({items: res});
-        });
-    }
-
-    async getItems() {
-        const response = await playbuzz.get('/content/feed/resources.json');
-        return response.data.items;
-
-    }
+const App = () => {
+	return (
+		<div className="app">
+			<Router>
+				<Navbar/>
+				<main>
+					<Switch>
+						<Route exact path="/" component={Feed}/>
+						<Route path="/exco/:id" component={ExcoPage}/>
+					</Switch>
+				</main>
+			</Router>
+		</div>
+	);
 }
 
 export default App;
